@@ -1,0 +1,19 @@
+# Use this for setting up simple NFS pvs
+#
+# Imageine the following
+# 10.5.1.23 is my share and I have a bunch of disks at /nfs/disk-01 02 03
+# It's super easy to carve up a bunch of these with a loop.
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: hofund-vol-01
+spec:
+  accessModes:
+    - ReadWriteOnce
+  capacity:
+    storage: 20Gi
+  nfs:
+    path: /nfs/disk-01
+    server: 10.5.1.23
+  persistentVolumeReclaimPolicy: Recycle
+  storageClassName: nfs

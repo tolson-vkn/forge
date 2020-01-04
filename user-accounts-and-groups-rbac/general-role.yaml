@@ -1,0 +1,63 @@
+######################################
+# Role extenions we want for everyone
+# ---
+# Role given for our users. We want
+# This sample cluster to allow for
+# global log read, looking at pods,
+# etc. But don't allow secrets ofc
+######################################
+apiVersion: rbac.authorization.k8s.io/v1beta1
+kind: ClusterRole
+metadata:
+  name: global-read-only
+rules:
+  - apiGroups:
+    - ""
+    resources:
+    # All people in the org ahould be able to look but
+    # not modify. Useful if teams microserves bridge 
+    # teams and project namespaces
+    - namespaces
+    - pods
+    - replicasets
+    - nodes
+    - deployments
+    - daemonsets
+    - services
+    verbs:
+    - get
+    - list
+    - watch
+  - apiGroups:
+    - "extensions"
+    resources:
+    - ingresses
+    verbs:
+    - get
+    - list
+    - watch
+  - apiGroups:
+    - ""
+    resources:
+    - pods
+    - pods/log
+    verbs:
+    - get
+    - list
+---
+apiVersion: rbac.authorization.k8s.io/v1beta1
+kind: ClusterRoleBinding
+metadata:
+  name: global-read-only
+  namespace: kube-system
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: global-read-only
+subjects:
+  - apiGroup: rbac.authorization.k8s.io
+    kind: Group
+    name: everyone
+  - apiGroup: rbac.authorization.k8s.io
+    kind: User
+    name: tolson

@@ -1,0 +1,36 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: lacroix
+  labels:
+    app: lacroix
+  namespace: default
+spec:
+  replicas: 1
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        app: lacroix
+    spec:
+      containers:
+      - image: ubuntu
+        command: ["/bin/bash", "-c", "--"]
+        args: ['while true; do sleep 2; echo "I like lacroix - $(date)" >> /opt/date.log 2>&1; done']
+        imagePullPolicy: Always
+        volumeMounts:
+          - name: data-volume
+            mountPath: "/opt"
+        resources:
+          limits:
+            cpu: "25m"
+            memory: "50Mi"
+          requests:
+            cpu: "25m"
+            memory: "50Mi"
+      restartPolicy: Always
+      volumes:
+      - name: data-volume
+        persistentVolumeClaim:
+          claimName: lacroix-data
+status: {}

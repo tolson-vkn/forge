@@ -1,0 +1,13 @@
+apiVerion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  namespace: {{ default_ns }}
+  name: {{ default_ns }}-dev-group
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: {{ default_ns }}-user
+subjects:
+- kind: ServiceAccount
+  name: tolson
+  namepace: user-accounts

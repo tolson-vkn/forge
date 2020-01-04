@@ -1,0 +1,31 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: wan-test-job
+  labels:
+    app: wan-test
+  namespace: default
+spec:
+  template:
+    spec:
+      containers:
+      - image: ubuntu
+        name: wan-test
+        command: ["/opt/wan-test.sh"]
+        volumeMounts:
+          - name: config-volume
+            mountPath: /opt
+        resources:
+          limits:
+            cpu: "25m"
+            memory: 25Mi
+          requests:
+            cpu: "25m"
+            memory: 25Mi
+      restartPolicy: Never
+      volumes:
+        - name: config-volume
+          configMap:
+            name: wan-test
+            # 0755 octal in decimal
+            defaultMode: 493
