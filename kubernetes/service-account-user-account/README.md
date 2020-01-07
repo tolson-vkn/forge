@@ -127,6 +127,10 @@ contexts:
     user: tolson
   name: python-dev
 current-context: python-dev
+users:
+- name: tolson
+  user:
+    token: eyJhbGciOiJFEkxhr... (Of course again, this is longer) 
 ```
 
 Set the role for this user, follow the template in the role-tpl.yaml, you'll end up with a namespace role something like this:
