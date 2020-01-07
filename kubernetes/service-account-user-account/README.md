@@ -80,6 +80,10 @@ contexts:
     user: {{ username }}
   name: {{ default_ns }}
 current-context: {{ default_ns }}
+users:
+- name: {{ username }}
+  user:
+    token: {{ jwt }}
 ```
 
 Copy the certificate authority from your kubeconfig to the template:
