@@ -11,7 +11,7 @@ spec:
     storage: 20Gi
   nfs:
     path: /nfs/disk-$(printf "%02d" $x)
-    server: 
+    server: 10.5.1.217
   persistentVolumeReclaimPolicy: Recycle
   storageClassName: nfs
 ---
