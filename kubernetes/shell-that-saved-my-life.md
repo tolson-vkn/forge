@@ -19,3 +19,12 @@ kubectl config view -o jsonpath='{"Cluster name\tServer\n"}{range .clusters[*]}{
 export CLUSTER_NAME='foo'
 APISERVER=$(kubectl config view -o jsonpath="{.clusters[?(@.name==\"$CLUSTER_NAME\")].cluster.server}")
 ```
+
+## Get node IPs
+
+You may need to change to ExternalIP if on cloud.
+```
+kubectl get nodes -o jsonpath='{.items[*].status.addresses[?(@.type=="InternalIP")].address}'
+```
+
+Results: `10.5.1.206 10.5.1.207`
