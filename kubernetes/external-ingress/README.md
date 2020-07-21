@@ -38,10 +38,11 @@ Maybe you just want ssh from one server. But it's fine this is the homelab!
 
 ```
 sudo su - 
+iptables -F INPUT
 iptables -A INPUT -p tcp --dport 80 -s 10.5.1.206 -j ACCEPT
 iptables -A INPUT -p tcp --dport 80 -s 10.5.1.207 -j ACCEPT
-iptables -A INPUT -p tcp --dport 80 -j DROP
 iptables -A INPUT -p tcp --dport 22 -j ACCEPT
+iptables -A INPUT -p tcp --dport 80 -j DROP
 ```
 
 If it's a docker host you might need to do this, but if it's a docker host why it not in kube? 😏
