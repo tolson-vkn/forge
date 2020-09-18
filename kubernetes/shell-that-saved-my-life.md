@@ -78,7 +78,7 @@ $ kubectl drain $node --ignore-daemonsets --delete-local-data $node
 
 ## Upgrades
 
-## Version Deprecations
+### Version Deprecations
 
 Check release notes: https://kubernetes.io/docs/setup/release/notes/
   * Specifically: https://kubernetes.io/docs/setup/release/notes/#deprecation-warnings
@@ -89,3 +89,12 @@ Check cluster api versions:
 ```
 $ kubectl api-versions
 ```
+
+## Get node IPs
+
+You may need to change to ExternalIP if on cloud.
+```
+kubectl get nodes -o jsonpath='{.items[*].status.addresses[?(@.type=="InternalIP")].address}'
+```
+
+Results: `10.5.1.206 10.5.1.207`
