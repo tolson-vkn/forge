@@ -1,0 +1,29 @@
+#!/bin/bash
+
+# We don't really use CODEOWNERS or have a consistent defaults for users for our
+# GitHub org... I don't like filling out my 7 teammates on every PR so xdotool 
+# to the rescue.
+
+engineers=(
+    'user1'
+    'user2_'
+)
+
+ntfy -t "PR Filler" send '5 seconds until xdotool'
+sleep 5
+
+for engineer in "${engineers[@]}"; do
+    # Enter engineer name
+    xdotool type "$engineer"
+    # Allow github to API search them.
+    sleep .5
+    # Select them
+    xdotool key "Return"
+
+    # Clear the input field
+    for chars in $(seq 1 ${#engineer}); do
+       xdotool key "BackSpace"
+    done
+done
+
+ntfy -t "PR Filler" send 'Done'
