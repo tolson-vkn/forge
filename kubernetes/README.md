@@ -98,3 +98,27 @@ kubectl get nodes -o jsonpath='{.items[*].status.addresses[?(@.type=="InternalIP
 ```
 
 Results: `10.5.1.206 10.5.1.207`
+
+## PVC PVs Storage
+
+Can't delete the volume not finalized:
+
+```
+kubectl patch pvc prometheus-tsdb -p '{"metadata":{"finalizers":null}}'
+```
+
+Get pods and claims:
+
+```
+kubectl get pods --all-namespaces -o=json | jq -c \
+'.items[] | {name: .metadata.name, namespace: .metadata.namespace, claimName: .spec.volumes[] | select(has("persistentVolumeClaim")).persistentVolumeClaim.claimName}'
+```
+
+## Move a selector around
+
+Janky-AF blue green.
+
+```
+kubectl patch svc my-app -p '{"spec":{"selector":{"app":"my-app-blue"}}}'
+kubectl patch svc my-app -p '{"spec":{"selector":{"app":"my-app-green"}}}'
+```

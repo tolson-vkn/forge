@@ -1,0 +1,55 @@
+# You have a ton of environment specific crap to change in here.
+# NFS server - PSQL Creds - Time - ETC
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  annotations:
+    repository: https://github.com/tolson-vkn/forge/tree/master/kubernetes-apps/psql-backup
+  name: db-backup
+  labels:
+    app: db-backup
+spec:
+  # Nodes run in UTC
+  schedule: "0 13,19,01 * * *"
+  concurrencyPolicy: "Forbid"
+  failedJobsHistoryLimit: 5
+  successfulJobsHistoryLimit: 1
+  jobTemplate:
+    spec:
+      template:
+        metadata:
+          labels:
+            app: db-backup
+        spec:
+          containers:
+          - image: timmyolson/db-backup
+            name: dumper
+            args: ["backup"]
+            env:
+              - name: HOST
+                value: my-db.default.svc.cluster.local
+              - name: DATABASE
+                value: my-app-db
+              - name: PGPASSWORD
+                valueFrom:
+                  secretKeyRef:
+                    name: db-backup
+                    key: pgpassword
+            volumeMounts:
+              - name: opt-backup
+                mountPath: "/opt"
+            resources:
+              limits:
+                cpu: "250m"
+                memory: 250Mi
+              requests:
+                cpu: "50m"
+                memory: 250Mi
+          restartPolicy: OnFailure     
+          # For this I don't recommend using an NFS PVC, use NFS raw. To prevent backups
+          # getting recycled or whatever might happen to the PVC.
+          volumes:
+            - name: opt-backup
+              nfs:
+                server: mynfs.example.com
+                path: "/kube-nfs/my-app-db
