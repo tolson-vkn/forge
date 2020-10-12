@@ -107,6 +107,13 @@ Can't delete the volume not finalized:
 kubectl patch pvc prometheus-tsdb -p '{"metadata":{"finalizers":null}}'
 ```
 
+No really - 
+
+```
+kubectl get namespace my-namespace -o json > tmp.json
+curl -k -H "Content-Type: application/json" -XPUT --data-binary @tmp.json https://cluster/api/v1/namespaces/my-namespace/finalize
+```
+
 Get pods and claims:
 
 ```
