@@ -9,7 +9,7 @@ if [ -z $git_commit ]; then
 fi
 
 # Lookup latest
-current_tags=$(git describe --abbrev=0 --tags)
+current_tag=$(git describe --abbrev=0 --tags)
 
 # No tag - set inital
 if [ $? == 128 ]; then
@@ -18,10 +18,10 @@ if [ $? == 128 ]; then
 fi
 
 # Split tags to determine next version
-IFS='.' read -r -s major_minor_patch <<< "$current_tag"
-major=v${major_minor_patch[0]:1}
-minor=v${major_minor_patch[1]}
-patch=v${major_minor_patch[2]}
+IFS='.' read -r -a major_minor_patch <<< "$current_tag"
+major=${major_minor_patch[0]:1}
+minor=${major_minor_patch[1]}
+patch=${major_minor_patch[2]}
 
 next_major=v$((major+1)).0.0
 next_minor=v${major}.$((minor+1)).0
