@@ -38,5 +38,20 @@ ALTER DEFAULT PRIVILEGES IN SCHEMA theschema GRANT SELECT ON SEQUENCES TO foobar
 ALTER DEFAULT PRIVILEGES IN SCHEMA theschema GRANT SELECT ON FUNCTIONS TO foobar;
 ```
 
+### BYTEA to TEXT
 
+SERVER\_ENCODING does funky things like `\n` becoming `\012` etc. 
+
+
+```
+SELECT convert_from(decode(x, 'escape'), 'UTF-8')
+FROM encode(E'\n\t\f\b\p\k\j\l\mestPrepared'::bytea, 'escape')
+  AS t(x);
+```
+
+#### Just give it to me as a column, k thx
+
+```
+select encode(table.column, 'escape') as name from table
+```
 
