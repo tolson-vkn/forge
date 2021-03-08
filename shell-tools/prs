@@ -9,7 +9,7 @@ engineers=(
     'user2_'
 )
 
-ntfy -t "PR Filler" send '5 seconds until xdotool'
+notify-send "PR Filler" '5 seconds until xdotool'
 sleep 5
 
 for engineer in "${engineers[@]}"; do
@@ -26,4 +26,4 @@ for engineer in "${engineers[@]}"; do
     done
 done
 
-ntfy -t "PR Filler" send 'Done'
+notify-send "PR Filler" 'Done'
