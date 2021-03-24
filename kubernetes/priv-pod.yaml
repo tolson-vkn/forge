@@ -1,0 +1,31 @@
+# O fuk I need to get onto a a machine with root aaaahh
+#
+# kubectl exec -it -n default privileged-pod -- chroot /host
+# 
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    run: privileged-pod
+  name: privileged-pod
+  namespace: default
+spec:
+  hostIPC: true
+  hostNetwork: true
+  hostPID: true
+  # Set to target a node
+  # nodeName: kube-node-0
+  containers:
+  - args:
+    - sleep
+    - "9999"
+    image: centos:7
+    name: privileged-pod
+    volumeMounts:
+    - name: host-root-volume
+      mountPath: /host
+      readOnly: true
+  volumes:
+  - name: host-root-volume
+    hostPath:
+      path: /
