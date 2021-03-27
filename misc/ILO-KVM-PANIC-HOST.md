@@ -15,8 +15,8 @@ Well hopefully the iLO KVM supports virtual media mounts. And I have a initramfs
 
 ## Alt:
 
-1. truncate -s 1G foo.img
-2. mkfs.ext4 foo.img
-3. mount -oloop foo.img /mnt
-4. (opt) resize2fs -M foo.img
-5. (opt) truncate -s ??? foo.img 
+1. `truncate -s 1G foo.img`
+2. `mkfs.ext4 foo.img`
+3. `mount -oloop foo.img /mnt`
+4. (opt) `resize2fs -M foo.img`
+5. (opt) `truncate -s ??? foo.img`
