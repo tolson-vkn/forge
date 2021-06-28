@@ -1,0 +1,64 @@
+version: '3'
+
+services:
+  prom:
+    image: prom/prometheus:v2.19.2
+    container_name: prometheus
+    volumes:
+      - ./prometheus/:/etc/prometheus
+      - prom:/prometheus
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--web.console.libraries=/usr/share/prometheus/console_libraries'
+      - '--web.console.templates=/usr/share/prometheus/consoles'
+    ports:
+      - 9090:9090
+
+  am:
+    image: prom/alertmanager:v0.21.0
+    container_name: alertmanager
+    volumes:
+      - ./alertmanager/:/etc/alertmanager/
+    command:
+      - '--config.file=/etc/alertmanager/alertmanager.yml'
+      - '--storage.path=/alertmanager'
+    ports:
+      - 9093:9093
+
+  push-gateway:
+    container_name: push-gateway
+    image: prom/pushgateway:v1.2.0
+    ports:
+      - 9091:9091
+
+  grafana:
+    image: grafana/grafana:6.3.6
+    container_name: grafana
+    user: "472"
+    volumes:
+      - grafana:/var/lib/grafana
+    environment:
+      - 'GF_SECURITY_ADMIN_PASSWORD=foobar'
+      - 'GF_USERS_ALLOW_SIGN_UP=false'
+    ports:
+      - 3000:3000
+
+  node-exporter:
+    image: prom/node-exporter:v1.0.1
+    container_name: node-exporter
+    volumes:
+      - /proc:/host/proc:ro
+      - /sys:/host/sys:ro
+      - /:/rootfs:ro
+    command: 
+      - '--path.procfs=/host/proc' 
+      - '--path.sysfs=/host/sys'
+      - --collector.filesystem.ignored-mount-points
+      - "^/(sys|proc|dev|host|etc|rootfs/var/lib/docker/containers|rootfs/var/lib/docker/overlay2|rootfs/run/docker/netns|rootfs/var/lib/docker/aufs)($$|/)"
+    ports:
+      - 9100:9100
+
+volumes:
+  prom:
+  grafana:

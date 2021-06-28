@@ -1,0 +1,1 @@
+../prometheus/pushgateway_pgbackup_example.sh
