@@ -141,3 +141,9 @@ tr -s '[[:space:]]' '\n' |\
 sort |\
 uniq -c
 ```
+
+## Get latest events
+
+```
+kubectl get events --field-selector type!=Normal --sort-by=.metadata.creationTimestamp -w
+```
