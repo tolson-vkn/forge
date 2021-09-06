@@ -12,3 +12,11 @@ Well hopefully the iLO KVM supports virtual media mounts. And I have a initramfs
 6. `umount /mnt`
 7. Virtual Drives -> Image File Removable Media
 8. Mount on host and enjoy the file... Good luck!
+
+## Alt:
+
+1. `truncate -s 1G foo.img`
+2. `mkfs.ext4 foo.img`
+3. `mount -oloop foo.img /mnt`
+4. (opt) `resize2fs -M foo.img`
+5. (opt) `truncate -s ??? foo.img`

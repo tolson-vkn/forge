@@ -129,3 +129,21 @@ Janky-AF blue green.
 kubectl patch svc my-app -p '{"spec":{"selector":{"app":"my-app-blue"}}}'
 kubectl patch svc my-app -p '{"spec":{"selector":{"app":"my-app-green"}}}'
 ```
+
+## List all images
+
+iamge list image get
+
+
+```
+kubectl get pods --all-namespaces -o jsonpath="{.items[*].spec.containers[*].image}" |\
+tr -s '[[:space:]]' '\n' |\
+sort |\
+uniq -c
+```
+
+## Get latest events
+
+```
+kubectl get events --field-selector type!=Normal --sort-by=.metadata.creationTimestamp -w
+```
