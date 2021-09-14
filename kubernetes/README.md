@@ -147,3 +147,22 @@ uniq -c
 ```
 kubectl get events --field-selector type!=Normal --sort-by=.metadata.creationTimestamp -w
 ```
+
+
+## Prevent DS from schedule in places
+
+```
+tolerations:
+- key: node-role.kubernetes.io/master
+  effect: NoSchedule
+```
+
+Or also:
+
+```
+nodeSelector:
+  # good selector
+  beta.kubernetes.io/os: linux
+  # likely not in use
+  pizza: tim
+```
