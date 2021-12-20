@@ -166,3 +166,14 @@ nodeSelector:
   # likely not in use
   pizza: tim
 ```
+
+## Get JWT payload
+
+kubectl oidc-login get-token --oidc-issuer-url=<shhhhh> \
+    --oidc-client-id=<shhhhh> \
+    --oidc-extra-scope=email \
+    --oidc-extra-scope=offline_access \
+    --oidc-extra-scope=profile \
+    --oidc-extra-scope=openid \
+| jq .status.token -r | IFS='.' read -r JWT_HEADER_B64URL JWT_PAYLOAD_B64URL JWT_SIGNATURE_B64URL
+echo $JWT_PAYLOAD_B64URL | base64 --decode | jq
