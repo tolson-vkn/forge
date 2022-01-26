@@ -64,3 +64,11 @@ top -bn1 | grep load | awk '{printf "CPU Load: %.2f\n", $(NF-2)}'
 ```
 LC_ALL=C tr -dc A-Za-z0-9 </dev/urandom | head -c 40
 ```
+
+### Print all executables in path
+
+```
+whence -pm '*' | grep python
+```
+
+
