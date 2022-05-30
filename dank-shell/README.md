@@ -71,4 +71,11 @@ LC_ALL=C tr -dc A-Za-z0-9 </dev/urandom | head -c 40
 whence -pm '*' | grep python
 ```
 
+### Do something on PID completion
+
+Example; need to clone to hack with `testdisk`; `dd if=/dev/sdc of=/tmp/sdc.dd`, would run for 2-3 hours so, suspend when it's done and I'm asleep.
+
+```
+while true; do if [ ! $(pidof dd) ]; then systemctl suspend; fi; sleep 5; done
+```
 
