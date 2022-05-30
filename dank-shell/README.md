@@ -79,3 +79,16 @@ Example; need to clone to hack with `testdisk`; `dd if=/dev/sdc of=/tmp/sdc.dd`,
 while true; do if [ ! $(pidof hwatch) ]; then break; fi; sleep 5; done; systemctl suspend
 ```
 
+### Random chars
+
+```
+for x in {0..25}; do cat /proc/sys/kernel/random/uuid | sed 's/[-]//g' | head -c 6; echo; done
+```
+
+#### Random pets
+
+Get: `https://lib.rs/crates/petname`
+
+```
+petname
+```
