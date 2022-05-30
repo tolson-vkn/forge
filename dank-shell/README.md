@@ -76,6 +76,6 @@ whence -pm '*' | grep python
 Example; need to clone to hack with `testdisk`; `dd if=/dev/sdc of=/tmp/sdc.dd`, would run for 2-3 hours so, suspend when it's done and I'm asleep.
 
 ```
-while true; do if [ ! $(pidof dd) ]; then systemctl suspend; fi; sleep 5; done
+while true; do if [ ! $(pidof hwatch) ]; then break; fi; sleep 5; done; systemctl suspend
 ```
 
