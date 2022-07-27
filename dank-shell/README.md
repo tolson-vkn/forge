@@ -92,3 +92,14 @@ Get: `https://lib.rs/crates/petname`
 ```
 petname
 ```
+
+### Date conversion from epoch time
+
+```
+# Show me latest
+date -d @1659536819
+# Format
+date -d @1659536819 +"%d-%m-%Y %T %z"
+# Now epoch
+date +%s
+```
