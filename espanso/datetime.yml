@@ -1,0 +1,28 @@
+matches:
+  - regex: "!tz (?P<time>.*)\\."
+    replace: "{{west}} / {{central}} / {{east}} / {{utc}} / {{euroeast}}"
+    vars:
+      - name: myzone
+        type: shell
+        params:
+          cmd: "timedatectl status | grep 'zone' | awk '{print $3}'"
+      - name: west
+        type: shell
+        params:
+          cmd: "TZ=\"America/Los_Angeles\" date --date='TZ=\"{{myzone}}\" {{time}}' +\"%H:%M %Z\""
+      - name: central 
+        type: shell
+        params:
+          cmd: "TZ=\"America/Chicago\" date --date='TZ=\"{{myzone}}\" {{time}}' +\"%H:%M %Z\""
+      - name: east
+        type: shell
+        params:
+          cmd: "TZ=\"America/New_York\" date --date='TZ=\"{{myzone}}\" {{time}}' +\"%H:%M %Z\""
+      - name: utc
+        type: shell
+        params:
+          cmd: "TZ=\"Etc/UTC\" date --date='TZ=\"{{myzone}}\" {{time}}' +\"%H:%M %Z\""
+      - name: euroeast
+        type: shell
+        params:
+          cmd: "TZ=\"Europe/Berlin\" date --date='TZ=\"{{myzone}}\" {{time}}' +\"%H:%M %Z\""
