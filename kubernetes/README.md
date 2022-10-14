@@ -148,6 +148,11 @@ uniq -c
 kubectl get events --field-selector type!=Normal --sort-by=.metadata.creationTimestamp -w
 ```
 
+```
+kubectl get events -n env-echgo --field-selector involvedObject.name=env-echgo-5cc747767d-fzjv4
+```
+
+`-o json` useful to identify fields.
 
 ## Prevent DS from schedule in places
 
@@ -169,6 +174,7 @@ nodeSelector:
 
 ## Get JWT payload
 
+```
 kubectl oidc-login get-token --oidc-issuer-url=<shhhhh> \
     --oidc-client-id=<shhhhh> \
     --oidc-extra-scope=email \
@@ -177,3 +183,4 @@ kubectl oidc-login get-token --oidc-issuer-url=<shhhhh> \
     --oidc-extra-scope=openid \
 | jq .status.token -r | IFS='.' read -r JWT_HEADER_B64URL JWT_PAYLOAD_B64URL JWT_SIGNATURE_B64URL
 echo $JWT_PAYLOAD_B64URL | base64 --decode | jq
+```

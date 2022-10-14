@@ -103,3 +103,11 @@ date -d @1659536819 +"%d-%m-%Y %T %z"
 # Now epoch
 date +%s
 ```
+
+### du with sort
+
+```
+du -sh -- * | sort -h
+```
+
+
