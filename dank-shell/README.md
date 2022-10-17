@@ -110,4 +110,29 @@ date +%s
 du -sh -- * | sort -h
 ```
 
+### Splits
+
+Credit: https://stackoverflow.com/a/4170409
+
+```
+$ a='hello:world'
+
+$ b=${a%:*}
+$ echo "$b"
+hello
+
+$ a='hello:world:of:tomorrow'
+
+$ echo "${a%:*}"
+hello:world:of
+
+$ echo "${a%%:*}"
+hello
+
+$ echo "${a#*:}"
+world:of:tomorrow
+
+$ echo "${a##*:}"
+tomorrow
+```
 
