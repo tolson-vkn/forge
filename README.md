@@ -11,5 +11,5 @@ Things like:
 * python samples
 
 Things like this but not here:
-* https://github.com/tolson-vkn/env-echo
+* https://github.com/tolson-vkn/env-echgo
     * A simple flask app in K8s to let the user see how K8s works. (Kind of like KUARD)
